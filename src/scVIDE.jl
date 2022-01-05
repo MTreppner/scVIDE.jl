@@ -1,6 +1,6 @@
 module scVIDE
 
-#using StatsBase
+using StatsBase
 #using PyCall
 #using Random
 #using Distributed

@@ -19,7 +19,7 @@ const torch = PyNULL()
 const scvi_inference_autotune = PyNULL()
 const hyperopt = PyNULL()
 
-#function __init__()
+function __init__()
     copy!(random, pyimport("random"))
     copy!(os, pyimport("os"))
     copy!(np, pyimport("numpy"))

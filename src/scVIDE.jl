@@ -1,5 +1,7 @@
 module scVIDE
 
+using StatsBase
+
 """
     alternative_model_scVI(n_epochs, lr, n_genes, n_cells)
 Trains a scVI model and extracts the contribution to the evidence

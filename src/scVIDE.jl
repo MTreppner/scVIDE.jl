@@ -1,5 +1,23 @@
 module scVIDE
 
+using StatsBase
+using PyCall
+using Random
+using Distributed
+# Load python packages
+random = pyimport("random")
+os = pyimport("os")
+np = pyimport("numpy")
+pd = pyimport("pandas")
+scvi = pyimport("scvi")
+scvi_dataset = pyimport("scvi.dataset")
+scvi_models = pyimport("scvi.models")
+scvi_inference = pyimport("scvi.inference")
+torch = pyimport("torch")
+scvi_inference_autotune = pyimport("scvi.inference.autotune")
+hyperopt = pyimport("hyperopt")
+
+
 """
     alternative_model_scVI(n_epochs, lr, n_genes, n_cells)
 Trains a scVI model and extracts the contribution to the evidence
@@ -246,12 +264,12 @@ function null_model_scVI(;
             # Subsample s jackstraw sample
             s_cells = s
             arr = collect(1:size(countmatrix.X,1))
-            arr_sample = sample(arr, s_cells; replace=false)
+            arr_sample = StatsBase.sample(arr, s_cells; replace=false)
 
             # Sample variables of s jackstraw observations with replacement
             jackstraw_variables = Array{Float64,2}(undef, size(countmatrix.X[arr_sample,:]))
             for y = 1:size(arr_sample,1)
-                jackstraw_variables[y,:] .= sample(countmatrix.X[arr_sample[y],:], size(countmatrix.X,2), replace=true)
+                jackstraw_variables[y,:] .= StatsBase.sample(countmatrix.X[arr_sample[y],:], size(countmatrix.X,2), replace=true)
             end
             countmatrix_tmp[arr_sample,:] .= jackstraw_variables
 
@@ -301,12 +319,12 @@ function null_model_scVI(;
             # Subsample s jackstraw sample
             s_cells = s
             arr = collect(1:size(countmatrix.X,1))
-            arr_sample = sample(arr, s_cells; replace=false)
+            arr_sample = StatsBase.sample(arr, s_cells; replace=false)
 
             # Sample variables of s jackstraw observations with replacement
             jackstraw_variables = Array{Float64,2}(undef, size(countmatrix.X[arr_sample,:]))
             for y = 1:size(arr_sample,1)
-                jackstraw_variables[y,:] .= sample(countmatrix.X[arr_sample[y],:], size(countmatrix.X,2), replace=true)
+                jackstraw_variables[y,:] .= StatsBase.sample(countmatrix.X[arr_sample[y],:], size(countmatrix.X,2), replace=true)
             end
             countmatrix_tmp[arr_sample,:] .= jackstraw_variables
 
@@ -372,7 +390,7 @@ function subsample_scVI_cells!(data ,n_cells::Int64)
 
     # Random cell indices
     arrayy = collect(1:size(data.X,1))
-    array_sample = sample(arrayy, n_cells; replace=false)
+    array_sample = StatsBase.sample(arrayy, n_cells; replace=false)
     array_sample .= array_sample .- 1
 
     # Override original countmatrix
@@ -383,7 +401,7 @@ function subsample_scVI_cells_idxs(data ,n_cells::Int64)
 
     # Random cell indices
     arrayy = collect(1:size(data.X,1))
-    array_sample = sample(arrayy, n_cells; replace=false)
+    array_sample = StatsBase.sample(arrayy, n_cells; replace=false)
     array_sample .= array_sample .- 1
 
     # Override original countmatrix

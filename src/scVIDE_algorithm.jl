@@ -23,24 +23,6 @@ function alternative_model_scVI(;
     subsampling::Bool=false,
     use_autotune::Bool=false,
     search_space)
-
-    #using StatsBase
-    #using PyCall
-    #using Random
-    #using Distributed
-
-    # Load python packages
-    #random = pyimport("random")
-    #os = pyimport("os")
-    #np = pyimport("numpy")
-    #pd = pyimport("pandas")
-    #scvi = pyimport("scvi")
-    #scvi_dataset = pyimport("scvi.dataset")
-    #scvi_models = pyimport("scvi.models")
-    #scvi_inference = pyimport("scvi.inference")
-    #torch = pyimport("torch")
-    #scvi_inference_autotune = pyimport("scvi.inference.autotune")
-    #hyperopt = pyimport("hyperopt")
     
     if isempty(pretrained_model) == false
         countmatrix = scvi_dataset.CsvDataset(data_path, save_path = "", new_n_genes = n_genes);

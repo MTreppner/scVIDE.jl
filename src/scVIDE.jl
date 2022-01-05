@@ -1,10 +1,10 @@
 module scVIDE
 
 using StatsBase
-using Conda
-using PyCall
-using Random
-using Distributed
+#using Conda
+#using PyCall
+#using Random
+#using Distributed
 # Load python packages
 #random = pyimport("random")
 #os = pyimport("os")
@@ -50,17 +50,17 @@ function alternative_model_scVI(;
     #using Distributed
 
     # Load python packages
-    random = pyimport("random")
-    os = pyimport("os")
-    np = pyimport("numpy")
-    pd = pyimport("pandas")
-    scvi = pyimport("scvi")
-    scvi_dataset = pyimport("scvi.dataset")
-    scvi_models = pyimport("scvi.models")
-    scvi_inference = pyimport("scvi.inference")
-    torch = pyimport("torch")
-    scvi_inference_autotune = pyimport("scvi.inference.autotune")
-    hyperopt = pyimport("hyperopt")
+    #random = pyimport("random")
+    #os = pyimport("os")
+    #np = pyimport("numpy")
+    #pd = pyimport("pandas")
+    #scvi = pyimport("scvi")
+    #scvi_dataset = pyimport("scvi.dataset")
+    #scvi_models = pyimport("scvi.models")
+    #scvi_inference = pyimport("scvi.inference")
+    #torch = pyimport("torch")
+    #scvi_inference_autotune = pyimport("scvi.inference.autotune")
+    #hyperopt = pyimport("hyperopt")
     
     if isempty(pretrained_model) == false
         countmatrix = scvi_dataset.CsvDataset(data_path, save_path = "", new_n_genes = n_genes);
@@ -239,15 +239,15 @@ function null_model_scVI(;
     #using Distributed
 
     # Load python packages
-    random = pyimport("random")
-    os = pyimport("os")
-    np = pyimport("numpy")
-    pd = pyimport("pandas")
-    scvi = pyimport("scvi")
-    scvi_dataset = pyimport("scvi.dataset")
-    scvi_models = pyimport("scvi.models")
-    scvi_inference = pyimport("scvi.inference")
-    torch = pyimport("torch")
+    #random = pyimport("random")
+    #os = pyimport("os")
+    #np = pyimport("numpy")
+    #pd = pyimport("pandas")
+    #scvi = pyimport("scvi")
+    #scvi_dataset = pyimport("scvi.dataset")
+    #scvi_models = pyimport("scvi.models")
+    #scvi_inference = pyimport("scvi.inference")
+    #torch = pyimport("torch")
     
     # TODO: remove random seed and use repetitions instead.
     #Random.seed!(seed);
@@ -447,11 +447,6 @@ function jackstraw_scVI(;
     subsampling::Bool=false,
     use_autotune::Bool=false,
     search_space)
-
-    #using StatsBase
-    #using PyCall
-    #using Random
-    #using Distributed
 
     # Trained models
     alternative_model_scVI_out = alternative_model_scVI(data_path=data_path,

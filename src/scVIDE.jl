@@ -1,7 +1,7 @@
 module scVIDE
 
 using StatsBase
-#using PyCall
+using PyCall
 #using Random
 #using Distributed
 # Load python packages

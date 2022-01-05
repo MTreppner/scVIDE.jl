@@ -398,7 +398,7 @@ end
 
 function subsample_scVI_cells!(data ,n_cells::Int64)
 
-    #using StatsBase
+    using StatsBase
 
     # Random cell indices
     arrayy = collect(1:size(data.X,1))
@@ -411,7 +411,7 @@ end
 
 function subsample_scVI_cells_idxs(data ,n_cells::Int64)
 
-    #using StatsBase
+    using StatsBase
 
     # Random cell indices
     arrayy = collect(1:size(data.X,1))

@@ -24,7 +24,7 @@ export
     null_model_scVI,
     subsample_scVI_cells!,
     subsample_scVI_cells_idxs,
-    jackstraw_scVI,
+    jackstraw_scVI
 
 
 include("scVIDE_algorithm.jl")

@@ -43,6 +43,11 @@ function alternative_model_scVI(;
     use_autotune::Bool=false,
     search_space)
 
+    using StatsBase
+    using PyCall
+    using Random
+    using Distributed
+
     # Load python packages
     random = pyimport("random")
     os = pyimport("os")
@@ -227,6 +232,11 @@ function null_model_scVI(;
     pretrained_model::String="",
     subsampling::Bool=false)
 
+    using StatsBase
+    using PyCall
+    using Random
+    using Distributed
+
     # Load python packages
     random = pyimport("random")
     os = pyimport("os")
@@ -388,6 +398,8 @@ end
 
 function subsample_scVI_cells!(data ,n_cells::Int64)
 
+    using StatsBase
+
     # Random cell indices
     arrayy = collect(1:size(data.X,1))
     array_sample = StatsBase.sample(arrayy, n_cells; replace=false)
@@ -398,6 +410,8 @@ function subsample_scVI_cells!(data ,n_cells::Int64)
 end
 
 function subsample_scVI_cells_idxs(data ,n_cells::Int64)
+
+    using StatsBase
 
     # Random cell indices
     arrayy = collect(1:size(data.X,1))
@@ -436,6 +450,11 @@ function jackstraw_scVI(;
     subsampling::Bool=false,
     use_autotune::Bool=false,
     search_space)
+
+    using StatsBase
+    using PyCall
+    using Random
+    using Distributed
 
     # Trained models
     alternative_model_scVI_out = alternative_model_scVI(data_path=data_path,

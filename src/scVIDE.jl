@@ -1,9 +1,10 @@
 module scVIDE
 
 using StatsBase
+using Conda
 using PyCall
-#using Random
-#using Distributed
+using Random
+using Distributed
 # Load python packages
 #random = pyimport("random")
 #os = pyimport("os")

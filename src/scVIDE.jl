@@ -1,4 +1,4 @@
-#module scVIDE
+module scVIDE
 
 #using StatsBase
 #using PyCall
@@ -538,4 +538,4 @@ function jackstraw_scVI(;
     null_model_scVI_out=null_model_scVI_out)
 end
 
-#end # module
+end # module

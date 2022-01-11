@@ -30,7 +30,7 @@ function alternative_model_scVI(;
         if subsampling == true
             Random.seed!(111);
             subsample_scVI_cells!(countmatrix, n_cells);
-        end
+        end;
 
         # Load pre-trained model
         trainer = torch.load(pretrained_model);
@@ -156,14 +156,14 @@ function alternative_model_scVI(;
     
             best = [];
             best_trainer = trainer;
-        end
-    end
+        end;
+    end;
 
     if use_autotune == true
-        (elbo_per_cell=elbo_per_cell, elbo=elbo, elbo_per_cell_null=elbo_per_cell_null, elbo_null=elbo_null , trainer=best_trainer, model=best_trainer.model, countmatrix=countmatrix, autotune_out=trials.best_trial)
+        (elbo_per_cell=elbo_per_cell, elbo=elbo, elbo_per_cell_null=elbo_per_cell_null, elbo_null=elbo_null , trainer=best_trainer, model=best_trainer.model, countmatrix=countmatrix, autotune_out=trials.best_trial);
     else
-        (elbo_per_cell=elbo_per_cell, elbo=elbo, elbo_per_cell_null=elbo_per_cell_null, elbo_null=elbo_null , trainer=best_trainer, countmatrix=countmatrix)
-    end
+        (elbo_per_cell=elbo_per_cell, elbo=elbo, elbo_per_cell_null=elbo_per_cell_null, elbo_null=elbo_null , trainer=best_trainer, countmatrix=countmatrix);
+    end;
 end
 
 """
@@ -353,9 +353,9 @@ function null_model_scVI(;
             vae = nothing;
             trainer = nothing;
             full = nothing;
-        end
-    end
-    (elbo_per_cell_append=elbo_per_cell_append, jackstraw_indices=arr_sample_append, elbo_per_cell_append_null=elbo_per_cell_append_null, posterior_object = posterior_object)
+        end;
+    end;
+    (elbo_per_cell_append=elbo_per_cell_append, jackstraw_indices=arr_sample_append, elbo_per_cell_append_null=elbo_per_cell_append_null, posterior_object = posterior_object);
 end
 
 
@@ -380,7 +380,7 @@ function subsample_scVI_cells_idxs(data ,n_cells::Int64)
     # Override original countmatrix
     data.update_cells(array_sample);
 
-    array_sample
+    array_sample;
 end
 
 """
@@ -482,12 +482,12 @@ function jackstraw_scVI(;
                                                                     subsampling=subsampling),
                     Iterators.product(n_epochs, lr, n_genes, n_cells, n_latent, n_hidden, n_layers, batch_size, s, B, seed))...
             );
-        end
-    end
+        end;
+    end;
 
-    interrupt()
-    rmprocs(workers())
+    interrupt();
+    rmprocs(workers());
 
     (alternative_model_scVI_out=alternative_model_scVI_out,
-    null_model_scVI_out=null_model_scVI_out)
+    null_model_scVI_out=null_model_scVI_out);
 end

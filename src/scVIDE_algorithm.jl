@@ -43,6 +43,7 @@ function alternative_model_scVI(;
         
         random.seed(111);
         torch.manual_seed(111);
+        trainer.show_progbar = false
         trainer.train(n_epochs=n_epochs,lr=lr);
 
         full = trainer.create_posterior(trainer.model, countmatrix);
@@ -146,6 +147,7 @@ function alternative_model_scVI(;
             elbo_per_cell_null = full.elbo_sample();
             elbo_null = full.elbo();
             
+            trainer.show_progbar = false
             trainer.train(n_epochs=n_epochs,lr=lr);
     
             full = trainer.create_posterior(trainer.model, countmatrix);
@@ -262,6 +264,7 @@ function null_model_scVI(;
             # Training based on pre-trained model
             random.seed(111);
             torch.manual_seed(111);
+            trainer.show_progbar = false
             trainer.train(n_epochs=n_epochs,lr=lr);
                 
             full = trainer.create_posterior(trainer.model, countmatrix);
@@ -339,6 +342,7 @@ function null_model_scVI(;
             elbo_per_cell_tmp_null = elbo_per_cell_null[arr_sample];
             append!(elbo_per_cell_append_null, elbo_per_cell_tmp_null);
                 
+            trainer.show_progbar = false
             trainer.train(n_epochs=n_epochs,lr=lr);
                 
             full = trainer.create_posterior(trainer.model, countmatrix);

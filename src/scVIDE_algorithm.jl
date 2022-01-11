@@ -28,35 +28,35 @@ function alternative_model_scVI(;
         countmatrix = scvi_dataset.CsvDataset(data_path, save_path = "", new_n_genes = n_genes);
         
         if subsampling == true
-            Random.seed!(111)
+            Random.seed!(111);
             subsample_scVI_cells!(countmatrix, n_cells);
         end
 
         # Load pre-trained model
-        trainer = torch.load(pretrained_model)
+        trainer = torch.load(pretrained_model);
 
         full = trainer.create_posterior(trainer.model, countmatrix);
         latent, batch_indices, labels = full.sequential().get_latent(give_mean=true);
             
-        elbo_per_cell_null = full.elbo_sample()
-        elbo_null = full.elbo()
+        elbo_per_cell_null = full.elbo_sample();
+        elbo_null = full.elbo();
         
-        random.seed(111)
-        torch.manual_seed(111)
-        trainer.train(n_epochs=n_epochs,lr=lr)
+        random.seed(111);
+        torch.manual_seed(111);
+        trainer.train(n_epochs=n_epochs,lr=lr);
 
         full = trainer.create_posterior(trainer.model, countmatrix);
         latent, batch_indices, labels = full.sequential().get_latent(give_mean=true);
             
-        elbo_per_cell = full.elbo_sample()
-        elbo = full.elbo()       
+        elbo_per_cell = full.elbo_sample();
+        elbo = full.elbo();       
     else
 
         if use_autotune == true
             countmatrix = scvi_dataset.CsvDataset(data_path, save_path = "", new_n_genes = n_genes);
 
             if subsampling == true
-                Random.seed!(111)
+                Random.seed!(111);
                 subsample_scVI_cells!(countmatrix, n_cells);
             end
 
@@ -67,11 +67,11 @@ function alternative_model_scVI(;
                     pickle_result=false,
                     exp_key=string("autotune_out",n_cells),
                     max_evals=30,
-            )
+            );
             
             # Set hyperparameters
-            use_batches = false
-            use_cuda = true
+            use_batches = false;
+            use_cuda = true;
 
             # Train the model and output model likelihood every epoch
             vae = scvi_models.VAE(countmatrix.nb_genes, 
@@ -96,29 +96,29 @@ function alternative_model_scVI(;
             full = trainer.create_posterior(trainer.model, countmatrix);
             latent, batch_indices, labels = full.sequential().get_latent(give_mean=true);
                 
-            elbo_per_cell_null = full.elbo_sample()
-            elbo_null = full.elbo()
+            elbo_per_cell_null = full.elbo_sample();
+            elbo_null = full.elbo();
     
             full = best_trainer.create_posterior(best_trainer.model, countmatrix);
             latent, batch_indices, labels = full.sequential().get_latent(give_mean=true);
                 
-            elbo_per_cell = full.elbo_sample()
-            elbo = full.elbo()           
+            elbo_per_cell = full.elbo_sample();
+            elbo = full.elbo();           
         else
             countmatrix = scvi_dataset.CsvDataset(data_path, save_path = "", new_n_genes = n_genes);
 
             if subsampling == true
-                Random.seed!(111)
+                Random.seed!(111);
                 subsample_scVI_cells!(countmatrix, n_cells);
             end
     
             # Set hyperparameters
-            use_batches = false
-            use_cuda = true
+            use_batches = false;
+            use_cuda = true;
     
             # Set seeds
-            random.seed(111)
-            torch.manual_seed(111)
+            random.seed(111);
+            torch.manual_seed(111);
         
             # Train the model and output model likelihood every epoch
             vae = scvi_models.VAE(countmatrix.nb_genes, 
@@ -143,19 +143,19 @@ function alternative_model_scVI(;
             full = trainer.create_posterior(trainer.model, countmatrix);
             latent, batch_indices, labels = full.sequential().get_latent(give_mean=true);
                 
-            elbo_per_cell_null = full.elbo_sample()
-            elbo_null = full.elbo()
+            elbo_per_cell_null = full.elbo_sample();
+            elbo_null = full.elbo();
             
-            trainer.train(n_epochs=n_epochs,lr=lr)
+            trainer.train(n_epochs=n_epochs,lr=lr);
     
             full = trainer.create_posterior(trainer.model, countmatrix);
             latent, batch_indices, labels = full.sequential().get_latent(give_mean=true);
                 
-            elbo_per_cell = full.elbo_sample()
-            elbo = full.elbo()           
+            elbo_per_cell = full.elbo_sample();
+            elbo = full.elbo();           
     
-            best = []
-            best_trainer = trainer
+            best = [];
+            best_trainer = trainer;
         end
     end
 
@@ -213,9 +213,9 @@ function null_model_scVI(;
     
     # TODO: remove random seed and use repetitions instead.
     #Random.seed!(seed);
-    elbo_per_cell_append = Array{Float64,1}()
-    arr_sample_append = Array{Int64,1}()
-    elbo_per_cell_append_null = Array{Float64,1}()
+    elbo_per_cell_append = Array{Float64,1}();
+    arr_sample_append = Array{Int64,1}();
+    elbo_per_cell_append_null = Array{Float64,1}();
     for i in 1:B   
 
         if isempty(pretrained_model) == false
@@ -224,7 +224,7 @@ function null_model_scVI(;
             countmatrix = scvi_dataset.CsvDataset(data_path, save_path = "", new_n_genes = n_genes);
 
             if subsampling == true
-                Random.seed!(111)
+                Random.seed!(111);
                 subsample_scVI_cells!(countmatrix, n_cells);
             end
     
@@ -232,40 +232,40 @@ function null_model_scVI(;
             countmatrix_tmp = deepcopy(countmatrix.X);
 
             # Load pre-trained model
-            trainer = torch.load(pretrained_model)
+            trainer = torch.load(pretrained_model);
 
             # Subsample s jackstraw sample
-            s_cells = s
-            arr = collect(1:size(countmatrix.X,1))
-            arr_sample = StatsBase.sample(arr, s_cells; replace=false)
+            s_cells = s;
+            arr = collect(1:size(countmatrix.X,1));
+            arr_sample = StatsBase.sample(arr, s_cells; replace=false);
 
             # Sample variables of s jackstraw observations with replacement
-            jackstraw_variables = Array{Float64,2}(undef, size(countmatrix.X[arr_sample,:]))
+            jackstraw_variables = Array{Float64,2}(undef, size(countmatrix.X[arr_sample,:]));
             for y = 1:size(arr_sample,1)
-                jackstraw_variables[y,:] .= StatsBase.sample(countmatrix.X[arr_sample[y],:], size(countmatrix.X,2), replace=true)
+                jackstraw_variables[y,:] .= StatsBase.sample(countmatrix.X[arr_sample[y],:], size(countmatrix.X,2), replace=true);
             end
-            countmatrix_tmp[arr_sample,:] .= jackstraw_variables
+            countmatrix_tmp[arr_sample,:] .= jackstraw_variables;
 
             # Override original countmatrix
-            countmatrix.X = countmatrix_tmp
+            countmatrix.X = countmatrix_tmp;
 
             # Override countmatrix in pre-trained model
-            trainer.gene_dataset = countmatrix
+            trainer.gene_dataset = countmatrix;
 
             full = trainer.create_posterior(trainer.model, countmatrix);
                 
-            elbo_per_cell_null = full.elbo_sample()
+            elbo_per_cell_null = full.elbo_sample();
         
-            elbo_per_cell_tmp_null = elbo_per_cell_null[arr_sample]
-            append!(elbo_per_cell_append_null, elbo_per_cell_tmp_null)
+            elbo_per_cell_tmp_null = elbo_per_cell_null[arr_sample];
+            append!(elbo_per_cell_append_null, elbo_per_cell_tmp_null);
 
             # Training based on pre-trained model
-            random.seed(111)
-            torch.manual_seed(111)
-            trainer.train(n_epochs=n_epochs,lr=lr)
+            random.seed(111);
+            torch.manual_seed(111);
+            trainer.train(n_epochs=n_epochs,lr=lr);
                 
             full = trainer.create_posterior(trainer.model, countmatrix);
-            global posterior_object = full
+            global posterior_object = full;
                 
             elbo_per_cell = full.elbo_sample();
             elbo_per_cell_tmp = elbo_per_cell[arr_sample];
@@ -282,7 +282,7 @@ function null_model_scVI(;
             countmatrix = scvi_dataset.CsvDataset(data_path, save_path = "", new_n_genes = n_genes);
 
             if subsampling == true
-                Random.seed!(111)
+                Random.seed!(111);
                 subsample_scVI_cells!(countmatrix, n_cells);
             end
     
@@ -290,27 +290,27 @@ function null_model_scVI(;
             countmatrix_tmp = deepcopy(countmatrix.X);
 
             # Subsample s jackstraw sample
-            s_cells = s
-            arr = collect(1:size(countmatrix.X,1))
-            arr_sample = StatsBase.sample(arr, s_cells; replace=false)
+            s_cells = s;
+            arr = collect(1:size(countmatrix.X,1));
+            arr_sample = StatsBase.sample(arr, s_cells; replace=false);
 
             # Sample variables of s jackstraw observations with replacement
-            jackstraw_variables = Array{Float64,2}(undef, size(countmatrix.X[arr_sample,:]))
+            jackstraw_variables = Array{Float64,2}(undef, size(countmatrix.X[arr_sample,:]));
             for y = 1:size(arr_sample,1)
-                jackstraw_variables[y,:] .= StatsBase.sample(countmatrix.X[arr_sample[y],:], size(countmatrix.X,2), replace=true)
+                jackstraw_variables[y,:] .= StatsBase.sample(countmatrix.X[arr_sample[y],:], size(countmatrix.X,2), replace=true);
             end
-            countmatrix_tmp[arr_sample,:] .= jackstraw_variables
+            countmatrix_tmp[arr_sample,:] .= jackstraw_variables;
 
             # Override original countmatrix
-            countmatrix.X = countmatrix_tmp
+            countmatrix.X = countmatrix_tmp;
 
             # Set hyperparameters
-            use_batches = false
-            use_cuda = true
+            use_batches = false;
+            use_cuda = true;
 
             # Set seeds
-            random.seed(111)
-            torch.manual_seed(111)
+            random.seed(111);
+            torch.manual_seed(111);
             
             # Train the model and output model likelihood every epoch
             vae = scvi_models.VAE(countmatrix.nb_genes, 
@@ -334,15 +334,15 @@ function null_model_scVI(;
 
             full = trainer.create_posterior(trainer.model, countmatrix);
                 
-            elbo_per_cell_null = full.elbo_sample()
+            elbo_per_cell_null = full.elbo_sample();
         
-            elbo_per_cell_tmp_null = elbo_per_cell_null[arr_sample]
-            append!(elbo_per_cell_append_null, elbo_per_cell_tmp_null)
+            elbo_per_cell_tmp_null = elbo_per_cell_null[arr_sample];
+            append!(elbo_per_cell_append_null, elbo_per_cell_tmp_null);
                 
             trainer.train(n_epochs=n_epochs,lr=lr);
                 
             full = trainer.create_posterior(trainer.model, countmatrix);
-            global posterior_object = full
+            global posterior_object = full;
                 
             elbo_per_cell = full.elbo_sample();
             elbo_per_cell_tmp = elbo_per_cell[arr_sample];
@@ -362,23 +362,23 @@ end
 function subsample_scVI_cells!(data ,n_cells::Int64)
 
     # Random cell indices
-    arrayy = collect(1:size(data.X,1))
-    array_sample = StatsBase.sample(arrayy, n_cells; replace=false)
-    array_sample .= array_sample .- 1
+    arrayy = collect(1:size(data.X,1));
+    array_sample = StatsBase.sample(arrayy, n_cells; replace=false);
+    array_sample .= array_sample .- 1;
 
     # Override original countmatrix
-    data.update_cells(array_sample)
+    data.update_cells(array_sample);
 end
 
 function subsample_scVI_cells_idxs(data ,n_cells::Int64)
 
     # Random cell indices
-    arrayy = collect(1:size(data.X,1))
-    array_sample = StatsBase.sample(arrayy, n_cells; replace=false)
-    array_sample .= array_sample .- 1
+    arrayy = collect(1:size(data.X,1));
+    array_sample = StatsBase.sample(arrayy, n_cells; replace=false);
+    array_sample .= array_sample .- 1;
 
     # Override original countmatrix
-    data.update_cells(array_sample)
+    data.update_cells(array_sample);
 
     array_sample
 end
@@ -426,9 +426,9 @@ function jackstraw_scVI(;
                                                         search_space=search_space
     );
 
-    vae = nothing
-    trainer = nothing
-    full = nothing
+    vae = nothing;
+    trainer = nothing;
+    full = nothing;
 
     if isempty(pretrained_model) == false
         null_model_scVI_out = vcat(pmap(params -> null_model_scVI(data_path=data_path,

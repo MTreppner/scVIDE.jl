@@ -7,7 +7,3 @@ We illustrate how scVIDE can be used to determine the statistical power of scRNA
 
 ## Main requirements  
 Julia: 1.6.0
-
-## Installation instructions
- - Copy the folder "scVI" to your .julia folder.
- - Use the following command to install scVI using the terminal: python setup.py install
